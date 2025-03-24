@@ -1,0 +1,42 @@
+﻿
+
+<h1>Consumo Api Hospitales Clientes</h1>
+
+<button id="botonhospital">Load Hospitales</button>
+<table id="tablahospitales" class="table table-info">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Direccion</th>
+            <th>Telefono</th>
+            <th>Camas</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function(){
+            $("#botonhospital").click(function(){
+                var url = "https://apicorehospitalessmg.azurewebsites.net/api/hospitales";
+                $.ajax({
+                    url: url,
+                    method: "GET",
+                    success: function(data){
+                        var html = "";
+                        $.each(data, function(index, hospital){
+                            html += "<tr>";
+                            html += "<td>" + hospital.nombre + "</td>";
+                            html += "<td>" + hospital.direccion + "</td>";
+                            html += "<td>" + hospital.telefono + "</td>";
+                            html += "<td>" + hospital.camas + "</td>";
+                            html += "</tr>";
+                        })
+                        $("#tablahospitales tbody").html(html);
+                    }
+                })
+            })
+        })
+    </script>
+}

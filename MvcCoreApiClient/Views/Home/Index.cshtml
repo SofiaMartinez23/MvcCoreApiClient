@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <button id="botonLoad" class="btn btn-outline-success">Load Personas</button>
+    <table id="tablapersonas" class="table table-dark" >
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $("#botonLoad").click(function(){
+                var url = "https://apipersonassofia.azurewebsites.net/api/personas";
+                $.ajax({
+                    url: url,
+                    method: "GET",
+                    success: function(data){
+                        var html = "";
+                        $.each(data, function(index, persona){
+                            html += "<tr>";
+                            html += "<td>" + persona.nombre + "</td>";
+                            html += "<td>" + persona.email + "</td>";
+                            html += "<td>" + persona.edad + "</td>";
+                            html += "</tr>";
+                        })
+                        $("#tablapersonas tbody").html(html);
+                    }
+                })
+            })
+        })
+    </script>
+}
